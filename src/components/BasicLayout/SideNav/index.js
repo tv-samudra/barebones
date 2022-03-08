@@ -1,29 +1,31 @@
 import { Typography } from "@material-ui/core";
 import classNames from "classnames";
 import React, { memo } from "react";
-import { useBasicNav } from "../../../utils/useBasicNav";
+import { useBasicNav } from "../../../hooks";
 import { useStyles } from "./Styles";
 
-const navConfig = [{ text: "HOME", icon: null, navTag: "home" }];
-
+let navConfig = [
+  { text: "Home", path: "/home" },
+  { text: "Page", path: "/page" },
+];
 function SideNav() {
   const classes = useStyles();
 
-  const { activeTab, setActiveTab } = useBasicNav("home");
+  const { activeTab, setActiveTab } = useBasicNav("/home");
 
   return (
     <div className={classes.sideNav}>
       <div className={classes.navItems}>
-        {navConfig.map((item, index) => (
+        {navConfig.map(({ text, path }, index) => (
           <div
             className={classNames(classes.navItem, {
-              [classes.navActive]: index === activeTab,
+              [classes.navActive]: path === activeTab,
             })}
-            onClick={() => setActiveTab(item.navTag)}
+            onClick={() => setActiveTab(path)}
           >
             {/* <img src={item.icon} alt={item.text} /> */}
             <Typography variant="caption" component="div">
-              {item.text}
+              {text}
             </Typography>
           </div>
         ))}

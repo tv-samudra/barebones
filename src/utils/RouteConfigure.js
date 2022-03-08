@@ -1,10 +1,8 @@
-import { Home } from "./pages/Home";
-
-class RouteMaster {
+export class RouteMaster {
   basePath = "/app";
   defaultRoute = "/home";
   routes = [];
-  constructor({ basePath = "/app", defaultRoute = "/home" }) {
+  constructor({ basePath = "", defaultRoute = "" }={}) {
     this.basePath = basePath;
     this.defaultRoute = defaultRoute;
   }
@@ -19,7 +17,7 @@ RouteMaster.prototype.add = function (route) {
   return this;
 };
 
-class Route {
+export class Route {
   path = "";
   component = "";
   shouldAuthenticate = false;
@@ -41,12 +39,3 @@ class Route {
     return this;
   }
 }
-
-let routeConfig = new RouteMaster({});
-
-let home = new Route().add("path", "/home").add("component",Home);
-routeConfig.add(home);
-
-console.log(routeConfig)
-
-export const RouteConfig = routeConfig;

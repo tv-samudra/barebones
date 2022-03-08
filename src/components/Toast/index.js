@@ -1,7 +1,7 @@
 import React from "react";
 import { Snackbar, Typography } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { toastAtom } from "../../recoil/toast.recoil";
 
 export function Toast() {
@@ -36,16 +36,4 @@ export function Toast() {
   );
 }
 
-export const useToast = () => {
-  let setState = useSetRecoilState(toastAtom);
 
-  const success = (message) => {
-    setState({ show: true, message, type: "success" });
-  };
-
-  const error = (message) => {
-    setState({ show: true, message, type: "error" });
-  };
-
-  return { Toast: { success, error } };
-};

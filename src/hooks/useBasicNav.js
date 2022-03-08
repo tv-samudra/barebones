@@ -2,11 +2,16 @@ import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useRecoilState } from "recoil";
 import { navBasic } from "../recoil/Navigations.atom";
-import { Basic_Navs } from "./constants";
 
+ /**
+   * @typedef {Object} BasicNav
+   * @property {string} activeTab - the active route name
+   * @property {Function} setActiveTab - Setter for the setting the active tab
+   */
 /**
  * @method useBasicNav
  * @param {('home')} current - set the given tab active
+ * @returns {BasicNav}
  */
 export const useBasicNav = (current) => {
   const [currentActive, setCurrentActive] = useRecoilState(navBasic);
@@ -14,18 +19,18 @@ export const useBasicNav = (current) => {
   const history = useHistory();
 
   useEffect(() => {
-    if (current) setCurrentActive(Basic_Navs[current].index);
+    if (current) setCurrentActive(current);
   }, [current]);
   /**
-   * @method setActiveTab - mark the tab as active and change the styling of the nav element
-   * @param {('catalog'|'playground'|'dashboard')} tab
+   * @method setActiveTab - sets the current tab value to the provided route
+   * @param {string} tab - path to set to active
    * @param {Boolean=} autoRedirect=true - defaults to true, redirects automatically to the related route.
    */
   const setActiveTab = (tab, autoRedirect = true) => {
-    let { index, path = "/" } = Basic_Navs[tab];
-    setCurrentActive(index);
-    if (autoRedirect) history.push(path);
+    setCurrentActive(tab);
+    if (autoRedirect) history.push(tab);
   };
 
+ 
   return { activeTab: currentActive, setActiveTab };
 };
